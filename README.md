@@ -20,6 +20,7 @@ FUNCTIONS
 PATH TYPES
 
 Log file Path: This should be the path to your log file in Wallpaper Engine, default location is C:/Program Files (x86)/Steam/steamapps/common/wallpaper_engine/log.txt, you can use the "browse" button to input it.
+
 SHORTCUTS - For a normal exe file, simply put in the path and make sure NOT to use the "Function" checkbox.
     Examples:
     C:\Program Files (x86)\Steam\steam.exe
