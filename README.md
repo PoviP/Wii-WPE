@@ -2,6 +2,7 @@
 Software for Custom Wii home menu by LillyKyu
 
 HOW TO USE
+
 Download the dist.zip file and unzip wherever you want to keep it.
 There is a pre-configured "Config" file which contains some examples of ways to set up paths. Make sure to replace "Povve" in some paths with your own Windows account name.
 Run the WiiWPE.exe to get started!
@@ -9,6 +10,7 @@ Run the WiiWPE.exe to get started!
 Any changes you make to the "Apps" will be immediate, no need to restart or reconfigure anything, try it as you go!
 
 FUNCTIONS
+
 "Function" Checkbox - This is used when you're using a command rather than a path to an exe or similar.
 "Autostart on login" - Will create a shortcut in \AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup to make sure the app starts (minimized) when you start your computer. Simply uncheck to get rid of the shortcut.
 "Save Configuration" - Creates/updates your "config.json" file, making sure to keep all your settings even if the app closes.
@@ -16,6 +18,7 @@ FUNCTIONS
 "Quitting the app" - You can quit the app either by clicking the Exit button, or by right clicking on the app in the system tray and clicking Quit.
 
 PATH TYPES
+
 Log file Path: This should be the path to your log file in Wallpaper Engine, default location is C:/Program Files (x86)/Steam/steamapps/common/wallpaper_engine/log.txt, you can use the "browse" button to input it.
 SHORTCUTS - For a normal exe file, simply put in the path and make sure NOT to use the "Function" checkbox.
     Examples:
@@ -36,6 +39,7 @@ OPEN FILE IN SPECIFIC SOFTWARE - Sometimes you'll want to open a file etc in a s
 
 
 DO IT YOURSELF
+
 You can make this EXE yourself if you're not crazy enough to launch random EXE files from the internet.
 You'll need:
 Python - https://www.python.org/downloads/ Make sure you enable PATHS during installation
