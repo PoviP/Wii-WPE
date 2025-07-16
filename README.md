@@ -3,9 +3,7 @@ Software for Custom Wii home menu by LillyKyu
 
 HOW TO USE
 
-Download the dist.zip file and unzip wherever you want to keep it.
-There is a pre-configured "Config" file which contains some examples of ways to set up paths. Make sure to replace "Povve" in some paths with your own Windows account name.
-Run the WiiWPE.exe to get started!
+Due to antiviruses being rude, I've moved away the direct download, you'll have to create the app yourself using the DO IT YOURSELF guide further down.
 
 Any changes you make to the "Apps" will be immediate, no need to restart or reconfigure anything, try it as you go!
 
