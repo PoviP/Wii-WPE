@@ -14,23 +14,26 @@ import winshell
 
 # --- Configuration ---
 POLL_INTERVAL = 0.5
-DEBOUNCE_INTERVAL = 1 
+DEBOUNCE_INTERVAL = 1
 first_run = True 
-last_executed_time = 0 #time
-monitoring_thread_running = False 
+last_executed_time = 0 
+monitoring_thread_running = False
 
 class LogMonitorGUI:
     def __init__(self, master):
         global first_run, monitoring_thread_running
         self.master = master
-        master.title("wiiWPE")
+        master.title("wiiWPE Configuration")
+
+        # Set minimum window size
+        master.minsize(800, 400)
 
         # --- Variables ---
         self.log_file_path = tk.StringVar(value="C:\\Program Files (x86)\\Steam\\steamapps\\common\\wallpaper_engine\\log.txt")
-        self.app_commands = {f"app{i}": tk.StringVar() for i in range(1, 13)}
-        self.is_function = {f"app{i}": tk.BooleanVar() for i in range(1, 13)}
-        self.autostart_enabled = tk.BooleanVar()
-        self.monitoring_active = tk.BooleanVar(value=False)
+        self.app_commands = {f"app{i}": tk.StringVar() for i in range(1, 16)}
+        self.is_function = {f"app{i}": tk.BooleanVar() for i in range(1, 16)}
+        self.autostart_enabled = tk.BooleanVar() 
+        self.monitoring_active = tk.BooleanVar(value=False) 
         self.icon = None
 
         # --- Log File Path ---
@@ -39,40 +42,35 @@ class LogMonitorGUI:
         tk.Button(master, text="Browse", command=self.browse_log_file).grid(row=0, column=2, sticky="e")
 
         # --- App Configuration ---
-        for i in range(1, 13):
+        for i in range(1, 16):
             tk.Label(master, text=f"App {i}:").grid(row=i, column=0, sticky="w")
             tk.Entry(master, textvariable=self.app_commands[f"app{i}"], width=60).grid(row=i, column=1, sticky="we")
             tk.Checkbutton(master, text="Function", variable=self.is_function[f"app{i}"] ).grid(row=i, column=2, sticky="e")
 
-
         # --- Autostart Checkbox ---
-        tk.Checkbutton(master, text="Autostart", variable=self.autostart_enabled, command=self.update_autostart).grid(row=13, column=0, columnspan=3)
-
-        # --- Terminal Output ---
-        tk.Label(master, text="Output:").grid(row=16, column=0, sticky="w")
-        self.terminal = tk.Text(master, height=10, width=70, state="disabled")
-        self.terminal.grid(row=17, column=0, columnspan=3, sticky="we")
-
-        # --- Redirect stdout and stderr to the terminal ---
-        sys.stdout = TextRedirector(self.terminal, "stdout")
-        sys.stderr = TextRedirector(self.terminal, "stderr")
-
+        tk.Checkbutton(master, text="Autostart on Login", variable=self.autostart_enabled, command=self.update_autostart).grid(row=17, column=0, columnspan=3)
 
         # --- Buttons ---
-        tk.Button(master, text="Save", command=self.save_configuration).grid(row=14, column=0, columnspan=3)
+        tk.Button(master, text="Save Configuration", command=self.save_configuration).grid(row=18, column=0, columnspan=3)
         self.exit_button = tk.Button(master, text="Exit", command=self.confirm_quit)
-        self.exit_button.grid(row=15, column=0, columnspan=3)
+        self.exit_button.grid(row=19, column=0, columnspan=3)
 
+        # --- Terminal Output ---
+        tk.Label(master, text="Output:").grid(row=20, column=0, sticky="w")
+        self.terminal = tk.Text(master, height=10, width=70, state="disabled")
+        self.terminal.grid(row=21, column=0, columnspan=3, sticky="we")
+
+        sys.stdout = TextRedirector(self.terminal, "stdout")
+        sys.stderr = TextRedirector(self.terminal, "stderr")
 
         # Load initial configuration
         self.load_configuration()
 
-        # Check for --minimized argument
         if "--minimized" in sys.argv:
-            self.master.withdraw()  # Start minimized
+            self.master.withdraw() 
         else:
-            self.master.deiconify() #Show the window
-        self.monitoring_active = True 
+            self.master.deiconify() 
+        self.monitoring_active = True
         if not monitoring_thread_running:
             self.monitoring_thread = threading.Thread(target=self.monitoring_loop, daemon=True)
             self.monitoring_thread.start()
@@ -114,14 +112,14 @@ class LogMonitorGUI:
             self.update_autostart()
 
         except FileNotFoundError:
-            pass 
+            pass
         except Exception as e:
             messagebox.showerror("Error", f"Error loading configuration: {e}")
 
     def update_autostart(self):
         """Enables or disables autostart by creating/deleting a shortcut in the Startup folder."""
         app_name = "wiiWPE"
-        startup_folder = os.path.join(os.path.expanduser("~"), "AppData", "Roaming", "Microsoft", "Windows", "Start Menu", "Programs", "Startup") #Startup folder
+        startup_folder = os.path.join(os.path.expanduser("~"), "AppData", "Roaming", "Microsoft", "Windows", "Start Menu", "Programs", "Startup")
 
         shortcut_path = os.path.join(startup_folder, f"{app_name}.lnk")
 
@@ -211,18 +209,18 @@ class LogMonitorGUI:
         log_file = self.log_file_path.get()
         global last_known_position, last_executed_time
         command_mappings = {app: self.app_commands[app].get() for app in self.app_commands}
-        processed_lines = set() 
+        processed_lines = set()
 
         try:
             with open(log_file, 'r', encoding='utf-8') as log_file:
 
                 # On the first run, read to the end to skip existing entries.
                 if first_run:
-                    log_file.seek(0, os.SEEK_END) # Seek to the end of the file
+                    log_file.seek(0, os.SEEK_END)
                     last_known_position = log_file.tell()
-                    first_run = False # Turn the flag off
+                    first_run = False
 
-                else: # Subsequent Runs
+                else:
                     log_file.seek(last_known_position)  # Start from the last read position
                 for line in log_file:
                     if line in processed_lines:
@@ -260,14 +258,14 @@ class LogMonitorGUI:
             # Check if the command needs the shell (e.g., 'start' or steam://)
             if self.is_function[app_name].get():
                 try:
-                    subprocess.Popen(command, shell=True)  # Execute the command *with* shell=True
+                    subprocess.Popen(command, shell=True)  # Execute the command _with_ shell=True
                     print(f"Executed (with shell): {command}")
                 except Exception as e:
                     print(f"Error executing (with shell) {command}: {e}")
             else:
                 try:
                     # Use shlex.split to handle spaces and arguments correctly
-                    command_list = shlex.split(command, posix=False) 
+                    command_list = shlex.split(command, posix=False)
                     subprocess.Popen(command_list)
                     print(f"Executed: {command}")
                 except Exception as e:
@@ -288,8 +286,8 @@ class LogMonitorGUI:
             with open("config.json", "r") as f:
                 current_config = json.load(f)
         except:
-            return False #Assume there is a config
-        return config == current_config #If same return
+            return False
+        return config == current_config
 
 class TextRedirector:
     """A class for redirecting stdout and stderr to a Tkinter Text widget."""
@@ -301,7 +299,7 @@ class TextRedirector:
         self.widget.configure(state="normal")
         self.widget.insert("end", str, (self.tag,))
         self.widget.configure(state="disabled")
-        self.widget.see("end")  # Autoscroll to the end
+        self.widget.see("end")
 
     def flush(self):
         pass
