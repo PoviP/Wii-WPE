@@ -51,15 +51,28 @@ DO IT YOURSELF
 
 You can make this EXE yourself if you're not crazy enough to launch random EXE files from the internet.
 You'll need:
+
 Python - https://www.python.org/downloads/ Make sure you enable PATHS during installation
+
 Dependancies you can download with CMD
+
 Pyinstaller - pip install pyinstaller
+
 Winshell - pip install winshell
+
 Pillow - pip install pillow
+
 Pystray - pip install pystray
+
 pywin32 - pip install pywin32
 
+
 From the Github Repo you'll need source.py, source.spec, wiiWPE.ico, and icon.png
+
 If you want to make your own .spec file, make sure to add "icon='wiiWPE.ico'," to the EXE and changing the name to WiiWPE, and "hiddenimports=['pystray._win32', 'PIL._imagingtk', 'PIL', 'PIL.ImageTk', 'winshell', 'win32con', 'win32file']," to hiddenimports.
 
-Once everything is downloaded and installed, go through the source.py code and mess around til you're satisfied, then in CMD cd into the directory where you have all the code and use "pyinstaller source.spec". Once it's done, it'll create a dist directory where you have to manually add the icon.png, then start the program and roll.
+Once everything is downloaded and installed, go through the source.py code and mess around til you're satisfied, then in CMD cd into the directory where you have all the code and use:
+
+pyinstaller source.spec
+
+Once it's done, it'll create a dist directory where you have to manually add the icon.png, then start the program and roll.
