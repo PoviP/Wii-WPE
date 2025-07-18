@@ -69,7 +69,9 @@ From the Github Repo you'll need source.py, source.spec, wiiWPE.ico, and icon.pn
 
 If you want to make your own .spec file, make sure to add "icon='wiiWPE.ico'," to the EXE and changing the name to WiiWPE, and "hiddenimports=['pystray._win32', 'PIL._imagingtk', 'PIL', 'PIL.ImageTk', 'winshell', 'win32con', 'win32file']," to hiddenimports.
 
-Once everything is downloaded and installed, go through the source.py code and mess around til you're satisfied, then in CMD cd into the directory where you have all the code and use:
+Once everything is downloaded and installed, go through the source.py code and mess around til you're satisfied, then in CMD cd into the directory where you have all the code:
+
+cd C:\path\to\where you have all the scripts\
 
 pyinstaller source.spec
 
