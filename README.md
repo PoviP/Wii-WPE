@@ -3,7 +3,7 @@ Software for Custom Wii home menu by LillyKyu
 
 HOW TO USE
 
-Due to antiviruses being rude, I've moved away the direct download, you'll have to create the app yourself using the DO IT YOURSELF guide further down.
+Due to antiviruses being rude, it's recommended that you avoid downloading the actual app. Instead download Source code (.zip) and build the app yourself via Python/cmd with the guide below.
 
 Any changes you make to the "Apps" will be immediate, no need to restart or reconfigure anything, try it as you go!
 
