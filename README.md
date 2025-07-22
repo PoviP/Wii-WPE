@@ -52,17 +52,9 @@ You'll need:
 
 Python - https://www.python.org/downloads/ Make sure you enable PATHS during installation
 
-Dependancies you can download with CMD
+You can install all dependencies with this CMD command:
 
-Pyinstaller - pip install pyinstaller
-
-Winshell - pip install winshell
-
-Pillow - pip install pillow
-
-Pystray - pip install pystray
-
-pywin32 - pip install pywin32
+pip install pyinstaller winshell pillow pystray pywin32
 
 
 From the Github Repo you'll need source.py, source.spec, wiiWPE.ico, and icon.png
